@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'Screens/SplashScreen.dart';
 
 void main() async{
+
   runApp(const MyApp());
 }
 
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.amber,
         primaryColor: Color(0xFFf1f5f5),
+        backgroundColor: Colors.redAccent,
 
         //Scaffold
         scaffoldBackgroundColor: Color(0xFFf1f5f5),
@@ -30,8 +32,10 @@ class MyApp extends StatelessWidget {
           headline1: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.blueGrey),
           headline2: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.blueGrey),
           headline3: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.redAccent),
+          headline4: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.white),
           // headline2: TextStyle(fontSize: 20.0, color: Colors.blueGrey),
           bodyText1: TextStyle(fontSize: 16.0, color: Colors.blueGrey),
+          bodyText2: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.blueGrey),
         ),
 
         // Floating button
@@ -66,6 +70,7 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.amber,
         primaryColor: Color(0xFF191919),
+        backgroundColor: Colors.amber,
 
         //Scaffold
         scaffoldBackgroundColor: Color(0xFF191919),
@@ -73,9 +78,11 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Montserrat',
         textTheme: const TextTheme(
           headline1: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Color(0xFFf1f5f5)),
-          headline3: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.amber),
           headline2: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Color(0xFFf1f5f5)),
+          headline3: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.amber),
+          headline4: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.blueGrey),
           bodyText1: TextStyle(fontSize: 16.0, color:Color(0xFFf1f5f5)),
+          bodyText2: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color:Color(0xFFf1f5f5)),
         ),
 
         // Floating button
@@ -119,14 +126,3 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
-
-
-//  return MaterialApp(
-//       title: '2Do',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       // home: SplashScreen(),
-//       home: SplashScreen(),
-//     );
