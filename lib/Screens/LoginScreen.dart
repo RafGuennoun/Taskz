@@ -1,8 +1,11 @@
+import 'package:Taskz/Screens/HomeScreen.dart';
+import 'package:Taskz/UI/Colors.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:introduction_screen/introduction_screen.dart';
 import '../Widgets/UsernameGetter.dart';
-import 'HomeScreen.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({ Key? key }) : super(key: key);
@@ -13,129 +16,136 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
 
-  bool darkmode = false;
-  dynamic savedThemeMode;
-
-  Future getCurrentTheme() async {
-    savedThemeMode = await AdaptiveTheme.getThemeMode();
-    if (savedThemeMode.toString() == 'AdaptiveThemeMode.dark') {
-      print('mode sombre');
-      setState(() {
-        darkmode = true;
-      });
-    } else {
-      setState(() {
-        darkmode = false;
-      });
-      print('mode clair');
-    }
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getCurrentTheme();
-  }
-
-  // final _nameController = TextEditingController();
-
-  // @override
-  // void dispose() {
-  //   // TODO: implement dispose
-  //   super.dispose();
-  //   _nameController.dispose();
-  // }
+  var clr = PersonalColors();
 
   @override
   Widget build(BuildContext context) {
 
-    bool dark = darkmode;
-    return Scaffold(
+    Widget buildImage(String path){
+      return Center(
+        child: Image.asset(path, width: 350,) ,
+      );
+    }
 
-      // backgroundColor: Colors.amberAccent,
+    PageDecoration getPageDecoration(){
+      return PageDecoration(
+        titleTextStyle: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: clr.bleuFonce),
 
-      // appBar: AppBar(
-      //   title: const Text(
-      //     'Tasks',
-      //     style: TextStyle(
-      //       fontFamily: 'Montserrat',
-      //       fontSize: 20,
-      //       fontWeight: FontWeight.bold,
-      //       color: Colors.blueGrey
-      //     )
-      //   ),
-      //   // elevation: 0,
-      //   // backgroundColor: Colors.amberAccent ,
-      // ),
+        bodyTextStyle: TextStyle(fontSize: 16, color: clr.bleuFonce),
 
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 80),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
+        bodyPadding: const EdgeInsets.all(16).copyWith(bottom: 0),
+        imagePadding: const EdgeInsets.all(24),
+        pageColor: clr.blanc
+      );
+    }
 
-              FadeInUp(
-                duration: Duration(milliseconds: 800) ,
-                child: RichText(
-                  text: TextSpan(
-                    text: 'Manage your\nteam & evething \nwith ',
-                    style: Theme.of(context).textTheme.headline1,
-                  children: [
-                    TextSpan(
-                    text: 'Taskz',
-                      style: Theme.of(context).textTheme.headline3,
-                    ),
-                  ]
-                  )
+    DotsDecorator getDotsDecoration(){
+      return DotsDecorator(
+        color: Colors.grey,
+        size: const Size(10,10),
+        activeColor: clr.bleuFonce,
+        activeSize: const Size(25, 10),
+        activeShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24)
+        )
+      );
+    }
 
-                ),
+    return SafeArea(
+        child: IntroductionScreen(
+          pages: [
+
+            PageViewModel(
+              title: 'Bring structure\n to your day',
+              body: 'Using Taskz will help to optimize the structure of your working day and be more productive',
+              image: buildImage("assets/analytics.png"),
+              decoration: getPageDecoration()
+            ), 
+
+            PageViewModel(
+              title: 'Set your priorities',
+              body: "With Taskz, you can list down your to-do list, so you have one view of all that you have on your plate",
+              image: buildImage("assets/growth.png"),
+              decoration: getPageDecoration(),
+            ),
+
+            PageViewModel(
+              title: "Don't lose\n your task list",
+              body: "Have you ever lost your to do list? It's a real pain! It interrupts your work flow. Use Taskz, everything is saved for you",
+              image: buildImage("assets/annoyedwaiting.png"),
+              decoration: getPageDecoration()
+            ),
+          ],
+          done: const Text(
+            'Start',
+            style: TextStyle(
+              color: Colors.blueGrey,
+              fontSize: 18,
+              fontWeight: FontWeight.bold
               ),
-
-
-              FadeInLeftBig(
-                duration: Duration(milliseconds: 800) ,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.width,
-                  child: Image.asset('assets/bighead.png', fit: BoxFit.fill,),
-                ),
-              ),
-
-            ],
           ),
-        ) 
-      ),
+          onDone: (){
+            // Navigator.of(context).pushReplacement(
+            //   MaterialPageRoute(builder: (context) => HomeScreen())
+            // );
 
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.play_arrow),
-        onPressed: (){
-          showModalBottomSheet(
-            // so the keybord can't hide the bottomsheet
-            isScrollControlled: true,
-            context: context, 
-            builder: (context) => 
-              SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom
+            showModalBottomSheet(
+              // so the keybord can't hide the bottomsheet
+              isScrollControlled: true,
+              context: context, 
+              builder: (context) => 
+                SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom
+                    ),
+                    
+                    child: UsernameGetter() 
                   ),
-                  
-                  child: UsernameGetter() 
-                ),
-              ) 
-          );
+                ) 
+            );
+          },
+          showSkipButton: true,
+          skip: const Text(
+            "Skip",
+            style: TextStyle(
+              color: Colors.blueGrey,
+              // fontSize: 18,
+              // fontWeight: FontWeight.bold
+            ),
+          ),
+          dotsDecorator: getDotsDecoration(),
+          // globalBackgroundColor: darkmode ? clr.bleuFonce : clr.blanc,
+          globalBackgroundColor: clr.blanc,
+          showNextButton: false,
+        ),
+  
+      );
 
-          // Navigator.push(
-          //   context, 
-          //   MaterialPageRoute(builder: (context) => HomeScreen())
-          // );
-        }
-      ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+
+      // floatingActionButton: FloatingActionButton(
+      //   child: const Icon(Icons.play_arrow),
+      //   onPressed: (){
+      //     showModalBottomSheet(
+      //       // so the keybord can't hide the bottomsheet
+      //       isScrollControlled: true,
+      //       context: context, 
+      //       builder: (context) => 
+      //         SingleChildScrollView(
+      //           child: Container(
+      //             padding: EdgeInsets.only(
+      //               bottom: MediaQuery.of(context).viewInsets.bottom
+      //             ),
+                  
+      //             child: UsernameGetter() 
+      //           ),
+      //         ) 
+      //     );
+
+      //   }
+      // ),
       
-    );
   }
 }

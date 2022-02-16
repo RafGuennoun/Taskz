@@ -1,10 +1,13 @@
+import 'package:Taskz/Database/DatabaseHelper.dart';
+import 'package:Taskz/Models/Utils.dart';
+import 'package:Taskz/Screens/LoginScreen.dart';
+import 'package:Taskz/UI/Colors.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import 'Screens/SplashScreen.dart';
 
 void main() async{
-
   runApp(const MyApp());
 }
 
@@ -14,114 +17,192 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    precacheImage(
+      const AssetImage("assets/analytics.png"),
+      context
+    );
+    precacheImage(
+      const AssetImage("assets/growth.png"),
+      context
+    );
+    precacheImage(
+      const AssetImage("assets/annoyedwaiting.png"),
+      context
+    );
+    var clr = PersonalColors();
+    return ChangeNotifierProvider(
+      create: (context) => Utils(),
+      child: AdaptiveTheme(
+        //Theme clair
+        light: ThemeData(
+          brightness: Brightness.light,
 
-    return AdaptiveTheme(
-      //Theme clair
-      light: ThemeData(
-        brightness: Brightness.light,
+          primarySwatch: Colors.amber,
+          primaryColor: clr.bleuFonce,
+          backgroundColor: clr.blanc,
 
-        primarySwatch: Colors.amber,
-        primaryColor: Color(0xFFf1f5f5),
-        backgroundColor: Colors.redAccent,
+          //Scaffold
+          scaffoldBackgroundColor: clr.blanc,
 
-        //Scaffold
-        scaffoldBackgroundColor: Color(0xFFf1f5f5),
+          fontFamily: 'Montserrat',
+          textTheme: TextTheme(
+            headline1: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: clr.bleuFonce),
+            headline2: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: clr.rouge),
+            headline3: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: clr.orange),   
+            headline4: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: clr.bleuFonce),
+            // headline5: ,
+            // headline6: ,
 
-        fontFamily: 'Montserrat',
-        textTheme: const TextTheme(
-          headline1: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.blueGrey),
-          headline2: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Colors.blueGrey),
-          headline3: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.redAccent),
-          headline4: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.white),
-          // headline2: TextStyle(fontSize: 20.0, color: Colors.blueGrey),
-          bodyText1: TextStyle(fontSize: 16.0, color: Colors.blueGrey),
-          bodyText2: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.blueGrey),
-        ),
+            bodyText1: TextStyle(fontSize: 16.0, color: clr.bleuFonce),
+            bodyText2: TextStyle(fontSize: 16.0, color: clr.blanc), 
 
-        // Floating button
-        floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          backgroundColor: Colors.redAccent,
-          foregroundColor: Color(0xFFf1f5f5)
-        ),
+            caption: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: clr.blanc),
+            // overline: 
 
-        // Text button theme
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-            backgroundColor: Colors.redAccent,
-            primary: Color(0xFFf1f5f5)
           ),
-        ),
 
-        // AppBar
-        appBarTheme: const AppBarTheme(
-          centerTitle: true,
-          //elevation: 0,
-          foregroundColor: Colors.blueGrey,
-          backgroundColor: Colors.amber,
-          iconTheme: IconThemeData(
-            color: Colors.blueGrey,
+          // Floating button
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+            backgroundColor: clr.bleuFonce,
+            foregroundColor: clr.blanc,
           ),
-        ),
 
+          // Text button theme
+          // textButtonTheme: TextButtonThemeData(
+          //   style: TextButton.styleFrom(
+          //     backgroundColor: clr.bleuFonce,
+          //     primary: clr.blanc
+          //   ),
+          // ),
+
+          // AppBar
+          appBarTheme: AppBarTheme(
+            elevation: 0,
+            backgroundColor: clr.blanc,
+            iconTheme: IconThemeData(
+              color: clr.bleuFonce,
+              size: 25
+            ),
+          ),
+
+          //Drawer
+          drawerTheme: DrawerThemeData(
+            backgroundColor: clr.blanc
+          ),
+
+          //Divider
+          dividerTheme: DividerThemeData(
+            color: clr.rouge,
+            thickness: 5,
+          ),
+
+          //Card
+          cardTheme: CardTheme(
+            // color: clr.bleuFonce,
+            shadowColor: clr.bleuFonce,
+            elevation: 2
+          ),
+
+          //Checkbox
+          // checkboxTheme: CheckboxThemeData(
+          //   fillColor: MaterialStateProperty.all(clr.orange),
+          //   checkColor: MaterialStateProperty.all(clr.bleuFonce),
+          // ),
+
+
+          
+        ),
         
-      ),
-      dark: ThemeData(
-        brightness: Brightness.dark,
+        dark: ThemeData(
+          brightness: Brightness.dark,
 
-        primarySwatch: Colors.amber,
-        primaryColor: Color(0xFF191919),
-        backgroundColor: Colors.amber,
+          primarySwatch: Colors.amber,
+          primaryColor: clr.blanc,
+          backgroundColor: clr.bleuFonce,
 
-        //Scaffold
-        scaffoldBackgroundColor: Color(0xFF191919),
+          //Scaffold
+          scaffoldBackgroundColor: clr.bleuFonce,
 
-        fontFamily: 'Montserrat',
-        textTheme: const TextTheme(
-          headline1: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Color(0xFFf1f5f5)),
-          headline2: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Color(0xFFf1f5f5)),
-          headline3: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.amber),
-          headline4: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: Colors.blueGrey),
-          bodyText1: TextStyle(fontSize: 16.0, color:Color(0xFFf1f5f5)),
-          bodyText2: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color:Color(0xFFf1f5f5)),
+          fontFamily: 'Montserrat',
+          textTheme: TextTheme(
+            headline1: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: clr.blanc),
+            headline2: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: clr.orange),
+            headline3: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold, color: clr.bleuFonce),
+            headline4: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold, color: clr.blanc),
+            // headline4: ,
+            // headline5: ,
+            // headline6: ,
+
+            bodyText1: TextStyle(fontSize: 16.0, color: clr.blanc),
+            bodyText2: TextStyle(fontSize: 16.0, color: clr.bleuFonce),
+
+            caption: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: clr.bleuFonce),
+            // overline: 
+
+          ),
+
+          // Floating button
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+            backgroundColor: clr.rouge,
+            foregroundColor: clr.blanc
+          ),
+
+          
+          // Text button theme
+          // textButtonTheme: TextButtonThemeData(
+          //   style: TextButton.styleFrom(
+          //     backgroundColor: clr.orange,
+          //     primary: clr.bleuFonce
+          //   ),
+          // ),
+
+          // AppBar
+          appBarTheme: AppBarTheme(
+            elevation: 0,
+            backgroundColor: clr.bleuFonce,
+            iconTheme: IconThemeData(
+              color: clr.blanc,
+              size: 25
+            ),
+          ),
+
+          //Drawer
+          drawerTheme: DrawerThemeData(
+            backgroundColor: clr.bleuFonce,
+          ),
+
+          //Divider
+          dividerTheme: DividerThemeData(
+            color: clr.orange,
+            thickness: 5,
+          ),
+
+          //Card
+          cardTheme: CardTheme(
+            // color: clr.blanc,
+            // shadowColor: clr.blanc ,
+            elevation: 2
+          ),
+
+          // //Checkbox
+          // checkboxTheme: CheckboxThemeData(
+          //   fillColor: MaterialStateProperty.all(clr.bleuFonce),
+          //   checkColor: MaterialStateProperty.all(clr.orange),
+          // ),
+
+
         ),
 
-        // Floating button
-        floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          backgroundColor: Colors.amber,
-          foregroundColor: Color(0xFF191919)
-        ),
-
+        initial: AdaptiveThemeMode.light,
         
-        // Text button theme
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-            backgroundColor: Colors.amber,
-            primary: Colors.blueGrey
-          ),
-        ),
-
-        // AppBar
-        appBarTheme: const AppBarTheme(
-          centerTitle: true,
-          //elevation: 0,
-          foregroundColor: Colors.amber,
-          backgroundColor: Colors.blueGrey,
-          iconTheme: IconThemeData(
-            color: Color(0xFFf1f5f5),
-          ),
-        ),
-
-
+        builder: (theme, darkTheme) => MaterialApp(
+          title: '2Do',
+          theme: theme,
+          darkTheme: darkTheme,
+          // home: LoginScreen(),
+          home: SplashScreen(),
+        )
       ),
-
-      initial: AdaptiveThemeMode.system,
-      builder: (theme, darkTheme) => MaterialApp(
-        title: '2Do',
-        theme: theme,
-        darkTheme: darkTheme,
-        // home: SplashScreen(),
-        home: SplashScreen(),
-      )
     );
   }
 }

@@ -2,9 +2,11 @@ import 'dart:ui';
 
 class PersonalColors {
 
-  final Color blanc = const Color(0xFFf1f5f5);
-  final Color grisClair = const Color(0xFFa1beb9);
-  final Color jaune =  const Color(0xFFf7ba62);
-  final Color orange = const Color(0xFFda735b);
-  final Color grisFonce = const Color(0xFF3b5452);
+  final Color bleuFonce = const Color(0xFF011627);
+  // final Color bleuGris = const Color(0xFF4d5c68);
+  final Color bleuGris = const Color(0xFF1a2d3d);
+  final Color blanc = const Color(0xFFfdfffc);
+  final Color bleuCiel =  const Color(0xFF2ec4b6);
+  final Color rouge = const Color(0xFFe71d36);
+  final Color orange = const Color(0xFFff9f1c);
 }

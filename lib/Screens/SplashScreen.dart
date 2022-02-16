@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:Taskz/UI/Colors.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
@@ -35,29 +36,11 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  bool darkmode = false;
-  dynamic savedThemeMode;
-
-  Future getCurrentTheme() async {
-    savedThemeMode = await AdaptiveTheme.getThemeMode();
-    if (savedThemeMode.toString() == 'AdaptiveThemeMode.dark') {
-      print('mode sombre');
-      setState(() {
-        darkmode = true;
-      });
-    } else {
-      setState(() {
-        darkmode = false;
-      });
-      print('mode clair');
-    }
-  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getCurrentTheme();
     
     Timer(
       Duration(milliseconds: 4000),
@@ -70,38 +53,41 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
   
+    var clr = PersonalColors();
 
     return Scaffold(
+
+      // appBar: AppBar(
+      //   title: Text("Spalsh"),
+      // ),
       
-      //backgroundColor: Colors.blueGrey,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      
       body: SafeArea(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-
-        
-
               SizedBox(
                 width: MediaQuery.of(context).size.width*0.8,
                 height: MediaQuery.of(context).size.width*0.8 ,
                 child: TextLiquidFill(
                   text: 'Taskz',
-                  waveColor: darkmode ? Colors.amber : Colors.redAccent,
-                  boxBackgroundColor: Theme.of(context).primaryColor,
-                  loadDuration: Duration(milliseconds: 3000),
-                  waveDuration: Duration(milliseconds: 1500),
+                  waveColor: clr.rouge,
+                  // waveColor: Colors.green,
+                  boxBackgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  loadDuration: const Duration(milliseconds: 3000),
+                  waveDuration: const Duration(milliseconds: 1500),
                   //boxBackgroundColor: Colors.redAccent,
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                     fontSize: 80.0,
                     fontWeight: FontWeight.bold,
                     color: Colors.amber
                   ),
                   boxHeight: 300.0,
                 ),
-              )
+              ),
 
-            
             ],
           ),
         ) 

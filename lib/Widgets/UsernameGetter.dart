@@ -1,4 +1,6 @@
 
+import 'package:Taskz/UI/Colors.dart';
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,9 +20,30 @@ class _UsernameGetterState extends State<UsernameGetter> {
 
   final _nameController = TextEditingController();
 
-  bool empty =true;
+  bool? empty;
 
   late SharedPreferences prefs;
+
+  
+  bool darkmode = false;
+  dynamic savedThemeMode;
+
+  Future getCurrentTheme() async {
+    savedThemeMode = await AdaptiveTheme.getThemeMode();
+    if (savedThemeMode.toString() == 'AdaptiveThemeMode.dark') {
+      print('mode sombre');
+      setState(() {
+        darkmode = true;
+      });
+    } else {
+      setState(() {
+        darkmode = false;
+      });
+      print('mode clair');
+    }
+  }
+  var clr = PersonalColors();
+
   
   Future initPrefs() async {
     // instance
@@ -31,6 +54,7 @@ class _UsernameGetterState extends State<UsernameGetter> {
   initState(){
     // TODO: implement initState
     super.initState();
+    getCurrentTheme();
     initPrefs();
   }
 
@@ -44,7 +68,7 @@ class _UsernameGetterState extends State<UsernameGetter> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color:Theme.of(context).primaryColor,
+      color:Theme.of(context).scaffoldBackgroundColor,
       padding: EdgeInsets.all(30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -55,7 +79,7 @@ class _UsernameGetterState extends State<UsernameGetter> {
             style: Theme.of(context).textTheme.headline1,
           ),
 
-          SizedBox(height: 30,),
+          const SizedBox(height: 30,),
 
           TextField(
             controller: _nameController,
@@ -63,13 +87,17 @@ class _UsernameGetterState extends State<UsernameGetter> {
             autofocus: true,
             textAlign: TextAlign.center,
             decoration: InputDecoration(
-              border: const OutlineInputBorder(),
+              border: OutlineInputBorder(
+                // borderSide: const BorderSide(color: Colors.grey),
+              ),
               labelText: "Name",
               hintText: "Enter your name",
               errorText: empty == true ? 'Please enter a name' : null
             ),
             onChanged: (newText){
-              
+              setState(() {
+                empty = false;
+              });
             },
           ),
 
@@ -82,7 +110,14 @@ class _UsernameGetterState extends State<UsernameGetter> {
               right: (MediaQuery.of(context).size.width)*(0.2)
             ),
             child: TextButton(
-              child: Text("Let's start"),
+              style: TextButton.styleFrom(
+                backgroundColor: darkmode ? clr.orange : clr.bleuFonce,
+                primary: darkmode ? clr.bleuFonce : clr.blanc 
+              ),
+              child: Text(
+                "Let's start",
+                // style: Theme here,
+              ),
               onPressed: () async {
 
                 if (_nameController.text.isEmpty) {
